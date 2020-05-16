@@ -11,9 +11,9 @@ namespace API.Data
     public class PacijentRepo : IPacijentRepo
     {
         private readonly KV_TESTContext _context;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public PacijentRepo(KV_TESTContext ctx, Mapper mapper)
+        public PacijentRepo(KV_TESTContext ctx, IMapper mapper)
         {
             _context = ctx;
             _mapper = mapper;
