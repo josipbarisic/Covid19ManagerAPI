@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
-using API.Data;
+﻿using API.Data;
 using API.DTOs;
 using API.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -26,6 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<PacijentReadDTO>> GetAllPacijenti()
         {
@@ -33,6 +30,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<PacijentReadDTO>>(pacijenti));
         }
 
+        [Authorize]
         [HttpGet("{OIB}", Name = "GetPacijentByOIB")]
         public ActionResult<PacijentReadDTO> GetPacijentByOIB(long OIB)
         {
@@ -44,6 +42,7 @@ namespace API.Controllers
             return NotFound();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<PacijentReadDTO> CreatePacijent(PacijentCreateDTO pacijent)
         {
@@ -55,6 +54,7 @@ namespace API.Controllers
             return CreatedAtRoute(nameof(GetPacijentByOIB), new { Oib = pacijentReadDTO.Oib }, pacijentReadDTO);
         }
 
+        [Authorize]
         [HttpPut("{OIB}")]
         public ActionResult UpdatePacijent(int OIB, PacijentUpdateDTO pacijent)
         {
@@ -69,6 +69,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPatch("{OIB}")]
         public ActionResult PartialPacijentUpdate(int OIB, JsonPatchDocument<PacijentUpdateDTO> patchDoc)
         {
@@ -89,6 +90,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{OIB}")]
         public ActionResult DeletePacijent(long OIB)
         {
