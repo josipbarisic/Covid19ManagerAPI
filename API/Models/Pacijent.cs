@@ -9,6 +9,6 @@
         public string AdresaSi { get; set; }
         public decimal Lat { get; set; }
         public decimal Long { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; } = 2;
     }
 }

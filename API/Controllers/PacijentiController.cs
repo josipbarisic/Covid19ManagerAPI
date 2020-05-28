@@ -22,7 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<PacijentReadDTO>> GetAllPacijenti()
         {

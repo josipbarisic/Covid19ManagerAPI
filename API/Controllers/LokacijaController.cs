@@ -25,7 +25,7 @@ namespace API.Controllers
             _repository = repo;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost]
         public ActionResult CreateLokacija(LokacijaCreateDTO lokacija)
         {

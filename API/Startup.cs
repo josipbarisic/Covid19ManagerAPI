@@ -35,6 +35,8 @@ namespace API
 
             services.AddScoped<IPacijentRepo, PacijentRepo>();
 
+            services.AddScoped<ILokacijaRepo, LokacijaRepo>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {
                     opt.Audience = Configuration["AAD:ResourceId"];
