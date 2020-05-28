@@ -13,6 +13,8 @@ namespace API.Profiles
             CreateMap<PacijentCreateDTO, Pacijent>();
             CreateMap<PacijentUpdateDTO, Pacijent>();
             CreateMap<Pacijent, PacijentUpdateDTO>();
+            CreateMap<LokacijaCreateDTO, LokacijaPacijenta>();
+            CreateMap<LokacijaPacijenta, LokacijaCreateDTO>();
         }
     }
 }
