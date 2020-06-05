@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,20 @@ namespace API.Controllers
         {
             _mapper = mapper;
             _repository = repo;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateStanje(StanjeCreateDTO stanje)
+        {
+            var stanjeModel = _mapper.Map<StanjePacijenta>(stanje);
+            _repository.CreateStanje(stanjeModel);
+            var status = _repository.SaveChanges();
+            if (status)
+            {
+                return StatusCode(201);
+            }
+            return StatusCode(503);
         }
 
         [Authorize]

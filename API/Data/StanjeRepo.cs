@@ -18,6 +18,17 @@ namespace API.Data
             _context = ctx;
             _mapper = mapper;
         }
+
+        public void CreateStanje(StanjePacijenta stanje)
+        {
+            if (stanje == null)
+            {
+                throw new ArgumentNullException(nameof(stanje));
+            }
+
+            _context._02StanjePacijenta.Add(_mapper.Map<_02StanjePacijenta>(stanje));
+        }
+
         public IEnumerable<StanjePacijenta> GetStanjaByID(long ID)
         {
             return _mapper.Map<IEnumerable<StanjePacijenta>>(_context._02StanjePacijenta.Where(x => x.KorisnikId == ID).ToList());

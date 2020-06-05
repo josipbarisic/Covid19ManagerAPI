@@ -12,5 +12,6 @@ namespace API.Data
 
         IEnumerable<StanjePacijenta> GetStanjaByID(long ID);
         StanjePacijenta GetLastStanjeByID(long ID);
+        void CreateStanje(StanjePacijenta stanje);
     }
 }
