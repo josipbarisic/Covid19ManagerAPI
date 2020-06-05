@@ -7,5 +7,6 @@
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string AdresaSi { get; set; }
+        public string Stanje { get; set; }
     }
 }

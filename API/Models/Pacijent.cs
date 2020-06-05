@@ -10,5 +10,6 @@
         public decimal Lat { get; set; }
         public decimal Long { get; set; }
         public int Status { get; set; } = 2;
+        public string Stanje { get; set; }
     }
 }

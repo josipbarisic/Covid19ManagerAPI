@@ -11,5 +11,7 @@ namespace API.Data
         bool SaveChanges();
 
         void CreateLokacija(LokacijaPacijenta lokacija);
+        IEnumerable<LokacijaPacijenta> GetLokacijeByID(long ID);
+        LokacijaPacijenta GetLastLokacijeByID(long ID);
     }
 }

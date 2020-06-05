@@ -12,5 +12,6 @@ namespace API.Data
         void CreatePacijent(Pacijent pacijent);
         void UpdatePacijent(Pacijent pacijent);
         void DeletePacijent(Pacijent pacijent);
+        Pacijent GetPacijentByID(long ID);
     }
 }

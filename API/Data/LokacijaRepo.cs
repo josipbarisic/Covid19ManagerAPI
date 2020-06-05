@@ -29,6 +29,22 @@ namespace API.Data
             _context._02LokacijaPacijenta.Add(_mapper.Map<_02LokacijaPacijenta>(lokacija));
         }
 
+        public IEnumerable<LokacijaPacijenta> GetLokacijeByID(long ID)
+        {
+            return _mapper.Map<IEnumerable<LokacijaPacijenta>>(_context._02LokacijaPacijenta.Where(x => x.KorisnikId == ID).ToList());
+        }
+
+        public LokacijaPacijenta GetLastLokacijeByID(long ID)
+        {
+            var lokacije = GetLokacijeByID(ID);
+            if (lokacije.Count() > 0)
+            {
+                var zadnjaVrijemeLokacije = lokacije.Max(l => l.Vrijeme);
+                return _mapper.Map<LokacijaPacijenta>(lokacije.Where(l => l.Vrijeme == zadnjaVrijemeLokacije).FirstOrDefault());
+            }
+            return new LokacijaPacijenta();
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

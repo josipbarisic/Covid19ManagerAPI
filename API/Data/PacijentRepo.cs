@@ -48,6 +48,11 @@ namespace API.Data
             return _mapper.Map<Pacijent>(_context._02Pacijent.Where(x => x.Oib == OIB).FirstOrDefault());
         }
 
+        public Pacijent GetPacijentByID(long ID)
+        {
+            return _mapper.Map<Pacijent>(_context._02Pacijent.Where(x => x.Id == ID).FirstOrDefault());
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

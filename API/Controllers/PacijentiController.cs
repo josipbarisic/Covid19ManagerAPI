@@ -5,7 +5,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using Geolocation;
 
 namespace API.Controllers
 {
@@ -15,11 +17,15 @@ namespace API.Controllers
     {
         private readonly IPacijentRepo _repository;
         private readonly IMapper _mapper;
+        private readonly ILokacijaRepo _lokacijaRepo;
+        private readonly IStanjeRepo _stanjeRepo;
 
-        public PacijentiController(IPacijentRepo repository, IMapper mapper)
+        public PacijentiController(IPacijentRepo repository, IMapper mapper, ILokacijaRepo lokacijaRepo, IStanjeRepo stanjeRepo)
         {
             _repository = repository;
             _mapper = mapper;
+            _lokacijaRepo = lokacijaRepo;
+            _stanjeRepo = stanjeRepo;
         }
 
         [Authorize]
@@ -27,7 +33,44 @@ namespace API.Controllers
         public ActionResult<IEnumerable<PacijentReadDTO>> GetAllPacijenti()
         {
             var pacijenti = _repository.GetAllPacijenti();
+            foreach (var pacijent in pacijenti)
+            {
+                var stanje = _stanjeRepo.GetLastStanjeByID(pacijent.Id);
+                var udaljenost = 0d;
+                var trenutnaLokacija = _lokacijaRepo.GetLastLokacijeByID(pacijent.Id);
+                if(trenutnaLokacija?.Id != null && trenutnaLokacija?.Id != 0)
+                {
+                    var TL = new Coordinate(Convert.ToDouble(trenutnaLokacija.Lat), Convert.ToDouble(trenutnaLokacija.Long));
+                    var SI = new Coordinate(Convert.ToDouble(pacijent.Lat), Convert.ToDouble(pacijent.Long));
+                    udaljenost = GeoCalculator.GetDistance(TL, SI, 5) / 0.62137;
+                }
+                
+                if (stanje?.Temperatura > 37)
+                {
+                    pacijent.Stanje = "Visoka temp.";
+                }
+                else if(udaljenost > 1)
+                {
+                    pacijent.Stanje = "Udaljen više od 1km";
+                }
+                else 
+                {
+                    pacijent.Stanje = "Ok";
+                }
+            }
             return Ok(_mapper.Map<IEnumerable<PacijentReadDTO>>(pacijenti));
+        }
+
+        [Authorize]
+        [HttpGet("GetPacijentByID/{ID}", Name = "GetPacijentByID")]
+        public ActionResult<PacijentReadDTO> GetPacijentByID(long ID)
+        {
+            var pacijent = _repository.GetPacijentByID(ID);
+            if (pacijent != null)
+            {
+                return Ok(_mapper.Map<PacijentReadDTO>(pacijent));
+            }
+            return NotFound();
         }
 
         [Authorize]

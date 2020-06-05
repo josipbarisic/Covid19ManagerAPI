@@ -38,5 +38,29 @@ namespace API.Controllers
             }
             return StatusCode(503);
         }
+
+        [Authorize]
+        [HttpGet("GetLokacijeByID/{ID}", Name = "GetLokacijeByID")]
+        public ActionResult<IEnumerable<LokacijaReadDTO>> GetLokacijeByID(int ID)
+        {
+            var lokacije = _repository.GetLokacijeByID(ID);
+            if (lokacije != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<LokacijaReadDTO>>(lokacije));
+            }
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpGet("GetLastLokacijeByID/{ID}", Name = "GetLastLokacijeByID")]
+        public ActionResult<LokacijaReadDTO> GetLastLokacijeByID(int ID)
+        {
+            var lokacija = _repository.GetLastLokacijeByID(ID);
+            if (lokacija != null)
+            {
+                return Ok(_mapper.Map<LokacijaReadDTO>(lokacija));
+            }
+            return NotFound();
+        }
     }
 }
