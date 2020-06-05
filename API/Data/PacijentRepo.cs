@@ -4,6 +4,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.Data
 {
@@ -58,9 +59,11 @@ namespace API.Data
             return (_context.SaveChanges() >= 0);
         }
 
-        public void UpdatePacijent(Pacijent pacijent)
+        public async Task UpdatePacijent(Pacijent pacijent)
         {
-            //nothing
+            var entity = _context._02Pacijent.First(g => g.Id == pacijent.Id);
+            _context.Entry(entity).CurrentValues.SetValues(pacijent);
+            await _context.SaveChangesAsync();
         }
     }
 }

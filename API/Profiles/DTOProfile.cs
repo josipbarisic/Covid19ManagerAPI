@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.EFModels;
 using API.Models;
 using AutoMapper;
 
@@ -17,6 +18,8 @@ namespace API.Profiles
             CreateMap<LokacijaPacijenta, LokacijaCreateDTO>();
             CreateMap<LokacijaPacijenta, LokacijaReadDTO>();
             CreateMap<StanjePacijenta, StanjePacijentaReadDTO>();
+            CreateMap<StanjeCreateDTO, StanjePacijenta>();
+            CreateMap<PacijentUpdateDTO, _02Pacijent>();
         }
     }
 }

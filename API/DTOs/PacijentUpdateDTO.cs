@@ -16,5 +16,7 @@ namespace API.DTOs
         public decimal Lat { get; set; }
         [Required]
         public decimal Long { get; set; }
+        [Required]
+        public int Status { get; set; }
     }
 }

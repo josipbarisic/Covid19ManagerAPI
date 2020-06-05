@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using Geolocation;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -62,10 +63,10 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetPacijentByID/{ID}", Name = "GetPacijentByID")]
+        [HttpGet("{ID}", Name = "GetPacijentByID")]
         public ActionResult<PacijentReadDTO> GetPacijentByID(long ID)
         {
-            var pacijent = _repository.GetPacijentByID(ID);
+            var pacijent = _repository.GetPacijentByOIB(ID);
             if (pacijent != null)
             {
                 return Ok(_mapper.Map<PacijentReadDTO>(pacijent));
@@ -97,9 +98,9 @@ namespace API.Controllers
             return CreatedAtRoute(nameof(GetPacijentByOIB), new { Oib = pacijentReadDTO.Oib }, pacijentReadDTO);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPut("{OIB}")]
-        public ActionResult UpdatePacijent(int OIB, PacijentUpdateDTO pacijent)
+        public async Task<ActionResult> UpdatePacijent(long OIB, PacijentUpdateDTO pacijent)
         {
             var pacijentModelFromRepo = _repository.GetPacijentByOIB(OIB);
             if (pacijentModelFromRepo == null)
@@ -107,8 +108,7 @@ namespace API.Controllers
                 return NotFound();
             }
             _mapper.Map(pacijent, pacijentModelFromRepo);
-            _repository.UpdatePacijent(pacijentModelFromRepo);
-            _repository.SaveChanges();
+            await _repository.UpdatePacijent(pacijentModelFromRepo);
             return NoContent();
         }
 

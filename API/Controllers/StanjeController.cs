@@ -25,7 +25,7 @@ namespace API.Controllers
             _repository = repo;
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult CreateStanje(StanjeCreateDTO stanje)
         {

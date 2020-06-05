@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace API.Data
 {
@@ -10,7 +11,7 @@ namespace API.Data
         IEnumerable<Pacijent> GetAllPacijenti();
         Pacijent GetPacijentByOIB(long OIB);
         void CreatePacijent(Pacijent pacijent);
-        void UpdatePacijent(Pacijent pacijent);
+        Task UpdatePacijent(Pacijent pacijent);
         void DeletePacijent(Pacijent pacijent);
         Pacijent GetPacijentByID(long ID);
     }
