@@ -39,7 +39,7 @@ namespace API.Controllers
             return StatusCode(503);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("GetStanjaByID/{ID}", Name = "GetStanjaByID")]
         public ActionResult<IEnumerable<StanjePacijentaReadDTO>> GetStanjaByID(int ID)
         {

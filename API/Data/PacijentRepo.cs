@@ -10,10 +10,10 @@ namespace API.Data
 {
     public class PacijentRepo : IPacijentRepo
     {
-        private readonly KV_TESTContext _context;
+        private readonly covidContext _context;
         private readonly IMapper _mapper;
 
-        public PacijentRepo(KV_TESTContext ctx, IMapper mapper)
+        public PacijentRepo(covidContext ctx, IMapper mapper)
         {
             _context = ctx;
             _mapper = mapper;

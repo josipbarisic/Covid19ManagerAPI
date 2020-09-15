@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using API.Models;
 
 namespace API
 {
@@ -28,8 +29,15 @@ namespace API
             services.AddControllers().AddNewtonsoftJson(s => 
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
-            services.AddDbContext<KV_TESTContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<covidContext>(
+                options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    sqlServerOptionsAction: sqlOptions => {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 10);
+                    }
+                )
+            );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -38,6 +46,10 @@ namespace API
             services.AddScoped<ILokacijaRepo, LokacijaRepo>();
 
             services.AddScoped<IStanjeRepo, StanjeRepo>();
+
+            services.AddScoped<IEpidemiologRepo, EpidemiologRepo>();
+
+            services.AddScoped<IPorukaRepo, PorukaRepo>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {

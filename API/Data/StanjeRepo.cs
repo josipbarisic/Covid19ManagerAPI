@@ -10,10 +10,10 @@ namespace API.Data
 {
     public class StanjeRepo : IStanjeRepo
     {
-        private readonly KV_TESTContext _context;
+        private readonly covidContext _context;
         private readonly IMapper _mapper;
 
-        public StanjeRepo(KV_TESTContext ctx, IMapper mapper)
+        public StanjeRepo(covidContext ctx, IMapper mapper)
         {
             _context = ctx;
             _mapper = mapper;

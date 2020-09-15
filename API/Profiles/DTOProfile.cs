@@ -20,6 +20,8 @@ namespace API.Profiles
             CreateMap<StanjePacijenta, StanjePacijentaReadDTO>();
             CreateMap<StanjeCreateDTO, StanjePacijenta>();
             CreateMap<PacijentUpdateDTO, _02Pacijent>();
+            CreateMap<Poruka, PorukaCreateDTO>();
+            CreateMap<PorukaCreateDTO, Poruka>();
         }
     }
 }

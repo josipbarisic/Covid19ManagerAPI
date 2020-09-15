@@ -10,10 +10,10 @@ namespace API.Data
 {
     public class LokacijaRepo : ILokacijaRepo
     {
-        private readonly KV_TESTContext _context;
+        private readonly covidContext _context;
         private readonly IMapper _mapper;
 
-        public LokacijaRepo(KV_TESTContext ctx, IMapper mapper)
+        public LokacijaRepo(covidContext ctx, IMapper mapper)
         {
             _context = ctx;
             _mapper = mapper;

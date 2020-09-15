@@ -19,6 +19,10 @@ namespace API.Profiles
             CreateMap<StanjePacijenta, _02StanjePacijenta>();
             CreateMap<_02StatusSifrarnik, StatusSifrarnik>();
             CreateMap<StatusSifrarnik, _02StatusSifrarnik>();
+            CreateMap<_02Epidemiolog, Epidemiolog>();
+            CreateMap<Epidemiolog, _02Epidemiolog>();
+            CreateMap<_02Poruka, Poruka>();
+            CreateMap<Poruka, _02Poruka>().ForMember(dest => dest.Poruka, opt => opt.MapFrom(src => src.Text_poruke));
         }
     }
 }
